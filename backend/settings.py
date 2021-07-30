@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from os import environ
 from datetime import timedelta
-# import dj_database_url
-# import django_heroku
+import dj_database_url
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -98,7 +98,7 @@ DATABASES = {
     }
 }
 
-# db_from_env = dj_database_url.config()
+db_from_env = dj_database_url.config()
 DATABASES['default'].update()
 
 # Password validation
@@ -184,4 +184,4 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media'
 
 # Heroku
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
