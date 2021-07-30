@@ -5,7 +5,8 @@ from authentication.models import User
 class Benefits(models.Model):
     description = models.TextField()
     title = models.TextField()
-    image = models.ImageField(upload_to='benefits', max_length=255, blank=False, null=False, default='-')
+    image = models.TextField()
+    # image = models.ImageField(upload_to='benefits', max_length=255, blank=False, null=False, default='-')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

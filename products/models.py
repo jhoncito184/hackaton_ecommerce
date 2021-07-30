@@ -7,7 +7,8 @@ class Product(models.Model):
     description = models.TextField()
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='products', max_length=255, blank=False, null=False, default='-')
+    image = models.TextField()
+    # image = models.ImageField(upload_to='products', max_length=255, blank=False, null=False, default='-')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
