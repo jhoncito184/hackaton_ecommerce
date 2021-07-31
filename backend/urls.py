@@ -40,6 +40,10 @@ urlpatterns = [
     path('category/', include('category.urls')),
     path('products/', include('products.urls')),
     path('postulations/', include('postulations.urls')),
+    path('products_detail/', include('products_detail.urls')),
+    path('schedule/', include('schedule.urls')),
+    path('modules/', include('modules.urls')),
+    path('modules_detail/', include('modules_detail.urls')),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc')
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

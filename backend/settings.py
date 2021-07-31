@@ -49,6 +49,10 @@ INSTALLED_APPS = [
     'benefits',
     'category',
     'products',
+    'products_detail',
+    'schedule',
+    'modules',
+    'modules_detail',
     'postulations'
 ]
 
@@ -208,7 +212,7 @@ django_heroku.settings(locals())
 
 CORS_ORIGIN_WHITELIST = [
     'http://google.com',
-    'https://codepen.io/',
+    # 'https://codepen.io/',
     'http://localhost:8000',
     'http://127.0.0.1:9000'
 ]
