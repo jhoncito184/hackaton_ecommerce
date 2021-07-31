@@ -212,7 +212,6 @@ django_heroku.settings(locals())
 
 CORS_ORIGIN_WHITELIST = [
     'http://google.com',
-    # 'https://codepen.io/',
     'http://localhost:8000',
     'http://127.0.0.1:9000'
 ]
