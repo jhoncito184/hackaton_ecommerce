@@ -190,4 +190,21 @@ MEDIA_ROOT = 'media'
 django_heroku.settings(locals())
 
 # CORS
+
+# CORS_ALLOWED_ORIGINS = [
+#     "",
+# ]
+
+# CSRF_TRUSTED_ORIGINS = [
+#     '',
+# ]
+
+# CORS_Origin_WHITELIST = [
+#     'http://localhost:8000',
+# ]
+# CORS_Origin_REGEX_WHITELIST = [
+#     'http://localhost:8000',
+# ]
+
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
