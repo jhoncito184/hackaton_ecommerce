@@ -188,3 +188,6 @@ MEDIA_ROOT = 'media'
 
 # Heroku
 django_heroku.settings(locals())
+
+# CORS
+CORS_ALLOW_ALL_ORIGINS = True
