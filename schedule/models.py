@@ -12,4 +12,4 @@ class Schedule(models.Model):
         ordering = ['id']
 
     def __str__(self):
-        return self.title
+        return self.days
