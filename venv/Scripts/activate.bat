@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=D:\hackaton_ecommerce\venv
+set VIRTUAL_ENV=D:\JHOM\idat\repos\hackathon\hackaton_ecommerce\venv
 
 if not defined PROMPT set PROMPT=$P$G
 
