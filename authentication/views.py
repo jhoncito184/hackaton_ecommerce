@@ -10,6 +10,7 @@ from .models import User
 from .helpers import send_email
 from os import environ
 from jwt import decode, ExpiredSignatureError, DecodeError
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 
 # Create your views here.
@@ -29,7 +30,7 @@ class RegisterView(generics.GenericAPIView):
 
         endpoint_verify = reverse_lazy('email_verify')
 
-        url = f'http://{environ.get("URL_EMAIL")}/{endpoint_verify}?token={token}'
+        url = f'{environ.get("URL_EMAIL")}/{endpoint_verify}?token={token}'
 
         data = {
             'subject': 'Confirmar usuario',
@@ -96,3 +97,24 @@ class LogoutView(generics.GenericAPIView):
         return Response({
             'success': 'Se cerro la sesión'
         }, status=status.HTTP_200_OK)
+
+# Create your views here.
+class RegisterListAPIView(ListCreateAPIView):
+    serializer_class = RegisterSerializer
+    queryset = User.objects.all()
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        return serializer.save()
+
+    def get_queryset(self):
+        return self.queryset.filter()
+
+class RegisterRetrieveAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = RegisterSerializer
+    queryset = User.objects.all()
+    # permission_classes = [permissions.IsAuthenticated]
+    lookup_field = 'id'
+
+    def get_queryset(self):
+        return self.queryset.filter()
