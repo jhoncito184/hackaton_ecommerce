@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Schedule(models.Model):
+    title = models.TextField()
     days = models.TextField()
     hours = models.TextField()
 
