@@ -124,13 +124,14 @@ class TokenVerifyView(generics.GenericAPIView):
 
     token_params = Parameter('token', in_=IN_QUERY, description='Token Autenticación', type=TYPE_STRING)
     @swagger_auto_schema(manual_parameters=[token_params])
-
+    
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         # return Response(serializer.data, status=status.HTTP_200_OK)
 
-        token = request.GET.get('token')
+        token = serializer.data['token']
+
         try:
             payload = decode(token, environ.get('SECRET_KEY'), algorithms='HS256')
 
