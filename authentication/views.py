@@ -25,20 +25,20 @@ class RegisterView(generics.GenericAPIView):
         user_data = serializer.data
 
         # Obtener el objeto Usuario
-        user_object = User.objects.get(email=user_data['email'])
-        token = RefreshToken.for_user(user_object).access_token
+        # user_object = User.objects.get(email=user_data['email'])
+        # token = RefreshToken.for_user(user_object).access_token
 
-        endpoint_verify = reverse_lazy('email_verify')
+        # endpoint_verify = reverse_lazy('email_verify')
 
-        url = f'{environ.get("URL_EMAIL")}/{endpoint_verify}?token={token}'
+        # url = f'{environ.get("URL_EMAIL")}/{endpoint_verify}?token={token}'
 
-        data = {
-            'subject': 'Confirmar usuario',
-            'body': f'Hola {user_object.username}, usa este link para activar tu cuenta {url}',
-            'to': f'{user_object.email}'
-        }
+        # data = {
+        #     'subject': 'Confirmar usuario',
+        #     'body': f'Hola {user_object.username}, usa este link para activar tu cuenta {url}',
+        #     'to': f'{user_object.email}'
+        # }
 
-        send_email(data)
+        # send_email(data)
 
         return Response(user_data, status=status.HTTP_201_CREATED)
 
