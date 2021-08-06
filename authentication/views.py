@@ -5,7 +5,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.urls import reverse_lazy
 from drf_yasg.openapi import Parameter, IN_QUERY, TYPE_STRING
 from drf_yasg.utils import swagger_auto_schema
-from .serializers import RegisterSerializer, EmailVerifySerializer, LoginSerializer, LogoutSerializer
+from .serializers import RegisterSerializer, EmailVerifySerializer, LoginSerializer, LogoutSerializer, TokenVerifySerializer
 from .models import User
 from .helpers import send_email
 from os import environ
@@ -118,3 +118,37 @@ class RegisterRetrieveAPIView(RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return self.queryset.filter()
+
+class TokenVerifyView(generics.GenericAPIView):
+    serializer_class = TokenVerifySerializer
+
+    token_params = Parameter('token', in_=IN_QUERY, description='Token Autenticación', type=TYPE_STRING)
+    @swagger_auto_schema(manual_parameters=[token_params])
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        # return Response(serializer.data, status=status.HTTP_200_OK)
+
+        token = request.GET.get('token')
+        try:
+            payload = decode(token, environ.get('SECRET_KEY'), algorithms='HS256')
+
+            user = User.objects.get(id=payload['user_id'])
+            message = 'El token es correcto'
+
+            if token == User.tokens:
+                message = 'Los tokens no son iguales'
+
+            return Response({
+                'success': message
+            }, status=status.HTTP_200_OK)
+
+        except ExpiredSignatureError:
+            return Response({
+                'error': 'El token ha expirado'
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except DecodeError:
+            return Response({
+                'error': 'Token incorrecto'
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

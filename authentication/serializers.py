@@ -78,3 +78,6 @@ class LogoutSerializer(serializers.Serializer):
             RefreshToken(self.token).blacklist()
         except TokenError:
             self.fail('bad_token')
+
+class TokenVerifySerializer(serializers.Serializer):
+    token = serializers.CharField(max_length=255)
