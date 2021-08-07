@@ -5,8 +5,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.urls import reverse_lazy
 from drf_yasg.openapi import Parameter, IN_QUERY, TYPE_STRING
 from drf_yasg.utils import swagger_auto_schema
-from .serializers import RegisterSerializer, EmailVerifySerializer, LoginSerializer, LogoutSerializer, TokenVerifySerializer
+from .serializers import RegisterSerializer, EmailVerifySerializer, LoginSerializer, LogoutSerializer, TokenVerifySerializer, CouponVerifySerializer
 from .models import User
+from coupon.models import Coupon
+from postulations.models import Postulations
 from .helpers import send_email
 from os import environ
 from jwt import decode, ExpiredSignatureError, DecodeError
@@ -152,4 +154,44 @@ class TokenVerifyView(generics.GenericAPIView):
         except DecodeError:
             return Response({
                 'error': 'Token incorrecto'
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class CouponVerifyView(generics.GenericAPIView):
+    serializer_class = CouponVerifySerializer
+
+    coupon_params = Parameter('code', in_=IN_QUERY, description='Código de Cupón', type=TYPE_STRING)
+    @swagger_auto_schema(manual_parameters=[coupon_params])
+    
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        # return Response(serializer.data, status=status.HTTP_200_OK)
+
+        codeVerify = serializer.data['code']
+        message = ''
+
+        try:
+
+            for k in Coupon.objects.all():
+                message = 'Los cupones no son iguales'
+
+                if codeVerify == k.code:
+                    message = 'El cupón es correcto'
+                    break
+
+            return Response({
+                'success': message
+            }, status=status.HTTP_200_OK)
+
+        except Coupon.DoesNotExist:
+            return Response({
+                'error': 'No existe'
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except ExpiredSignatureError:
+            return Response({
+                'error': 'El cupón ha expirado'
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except DecodeError:
+            return Response({
+                'error': 'Cupón incorrecto'
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

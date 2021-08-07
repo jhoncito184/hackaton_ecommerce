@@ -81,3 +81,6 @@ class LogoutSerializer(serializers.Serializer):
 
 class TokenVerifySerializer(serializers.Serializer):
     token = serializers.CharField(max_length=255)
+
+class CouponVerifySerializer(serializers.Serializer):
+    code = serializers.CharField(max_length=255)
