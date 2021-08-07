@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Coupon(models.Model):
     email = models.TextField()
-    code = models.TextField(null=True)
+    code = models.TextField(editable=False, unique=True)
     is_active = models.BooleanField(default=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
