@@ -16,7 +16,7 @@ class Postulations(models.Model):
     phone = models.TextField()
     email = models.TextField()
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
-    coupon = models.TextField(default=get_promo_code(5))
+    coupon = models.TextField(default=get_promo_code(5), unique=True)
 
     class Meta:
         ordering = ['id']

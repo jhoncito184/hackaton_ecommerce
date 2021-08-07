@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'authentication',
     'benefits',
     'category',
+    'coupon',
     'products',
     'products_detail',
     'schedule',
